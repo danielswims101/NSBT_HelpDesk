@@ -19,6 +19,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      // Private, staff-only desk (desk.nsbt.org) — never index it, and keep it
+      // out of search entirely so it can't surface beside the public site
+      // (www.nsbt.org). This desk is a separate product from the school website.
+      { name: "robots", content: "noindex, nofollow" },
       { title: APP_NAME },
       {
         name: "description",

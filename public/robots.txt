@@ -1,0 +1,5 @@
+# NSBT Populi AI Help Desk (desk.nsbt.org) — private, staff-only.
+# This is NOT the public school website (www.nsbt.org). It holds confidential
+# student records, so it must never be crawled or indexed.
+User-agent: *
+Disallow: /

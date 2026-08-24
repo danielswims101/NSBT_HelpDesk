@@ -19,6 +19,7 @@ import { Route as ItWorkRouteImport } from './routes/it-work'
 import { Route as LeadershipRouteImport } from './routes/leadership'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MeetRouteImport } from './routes/meet'
 import { Route as OfficeRouteImport } from './routes/office'
 import { Route as OpsRouteImport } from './routes/ops'
 import { Route as ReportsRouteImport } from './routes/reports'
@@ -84,6 +85,11 @@ const LearnRoute = LearnRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeetRoute = MeetRouteImport.update({
+  id: '/meet',
+  path: '/meet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OfficeRoute = OfficeRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/leadership': typeof LeadershipRoute
   '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
+  '/meet': typeof MeetRoute
   '/office': typeof OfficeRoute
   '/ops': typeof OpsRoute
   '/reports': typeof ReportsRoute
@@ -206,6 +213,7 @@ export interface FileRoutesByTo {
   '/leadership': typeof LeadershipRoute
   '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
+  '/meet': typeof MeetRoute
   '/office': typeof OfficeRoute
   '/ops': typeof OpsRoute
   '/reports': typeof ReportsRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/leadership': typeof LeadershipRoute
   '/learn': typeof LearnRoute
   '/login': typeof LoginRoute
+  '/meet': typeof MeetRoute
   '/office': typeof OfficeRoute
   '/ops': typeof OpsRoute
   '/reports': typeof ReportsRoute
@@ -265,6 +274,7 @@ export interface FileRouteTypes {
     | '/leadership'
     | '/learn'
     | '/login'
+    | '/meet'
     | '/office'
     | '/ops'
     | '/reports'
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/leadership'
     | '/learn'
     | '/login'
+    | '/meet'
     | '/office'
     | '/ops'
     | '/reports'
@@ -321,6 +332,7 @@ export interface FileRouteTypes {
     | '/leadership'
     | '/learn'
     | '/login'
+    | '/meet'
     | '/office'
     | '/ops'
     | '/reports'
@@ -350,6 +362,7 @@ export interface RootRouteChildren {
   LeadershipRoute: typeof LeadershipRoute
   LearnRoute: typeof LearnRoute
   LoginRoute: typeof LoginRoute
+  MeetRoute: typeof MeetRoute
   OfficeRoute: typeof OfficeRoute
   OpsRoute: typeof OpsRoute
   ReportsRoute: typeof ReportsRoute
@@ -438,6 +451,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meet': {
+      id: '/meet'
+      path: '/meet'
+      fullPath: '/meet'
+      preLoaderRoute: typeof MeetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/office': {
@@ -566,6 +586,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeadershipRoute: LeadershipRoute,
   LearnRoute: LearnRoute,
   LoginRoute: LoginRoute,
+  MeetRoute: MeetRoute,
   OfficeRoute: OfficeRoute,
   OpsRoute: OpsRoute,
   ReportsRoute: ReportsRoute,

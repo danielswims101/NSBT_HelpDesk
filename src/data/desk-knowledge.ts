@@ -8,6 +8,6 @@ export const operatorPrompts = [
 export const adminPrompts = [
   "Pull every term",
   "Pull home addresses",
-  "Pull students",
+  "Pull headcount",
   "Pull degrees granted",
 ];
