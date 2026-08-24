@@ -14,7 +14,6 @@ import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { chromium } from "playwright";
 import { checkedOutputPath, checkedUrl } from "./browser-guard.mjs";
-import { computeBrandWarnings } from "./brand-check.mjs";
 
 const url = checkedUrl(process.argv[2] || "http://127.0.0.1:8080/");
 const outPng = checkedOutputPath(
@@ -50,9 +49,8 @@ try {
 
   await page.screenshot({ path: outPng, fullPage: false });
 
-  // Brand-asset gate (best-effort heuristic, never changes the exit code) —
-  // logic lives in brand-check.mjs so it is unit-testable without a browser.
-  const brandWarnings = computeBrandWarnings({ hasCanvas });
+  // Brand-asset gate retired along with the Grok chrome; nothing to warn about.
+  const brandWarnings = [];
 
   console.log(
     JSON.stringify(
