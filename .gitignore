@@ -1,0 +1,14 @@
+.env.local
+.env
+.env.*
+!.env.example
+node_modules
+screenshots/
+attachments/
+.vercel/
+artifacts/
+dist/
+.output/
+server/.output/
+*.log
+.DS_Store

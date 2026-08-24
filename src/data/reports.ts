@@ -1,0 +1,258 @@
+import type { PullScope } from "@/data/scope";
+
+export type ReportRecipe = {
+  slug: string;
+  title: string;
+  when: string;
+  path: string;
+  roles: string;
+  exportAs: string;
+  scope: PullScope;
+  steps: string[];
+  neverTicket: string;
+};
+
+export const reports: ReportRecipe[] = [
+  {
+    slug: "home-addresses",
+    title: "Home addresses — every student since founding",
+    when: "Anyone asks for residence / home address for the whole school.",
+    path: "This desk → 4. Pull home addresses. In Populi: Profile → Info → Addresses, type Home. Or Data Slicer with address columns.",
+    roles: "Academic Auditor or Financial Auditor on the desk API key.",
+    exportAs: "CSV from this desk: name, street, city, state, ZIP, country.",
+    scope: "all-history",
+    steps: [
+      "Do not filter to the current term. This is every student on the campus.",
+      "On the Director of IT work page press 4. Pull home addresses.",
+      "Download the CSV. Send the cover note to Angela White. Do not paste the list into a public chatbot.",
+    ],
+    neverTicket: "Reading addresses your role can already see is not a Support ticket.",
+  },
+  {
+    slug: "term-inventory",
+    title: "Term inventory — every year on the campus",
+    when: "Before ANY all-years or every-cohort ask. Card 0 on the worksheet.",
+    path: "Academics — term selector (defaults to current). Export every term, or Data Slicer with no term filter.",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "XLS/CSV of every term: name, start, end, status.",
+    scope: "all-history",
+    steps: [
+      "Do not click the current session and stop. Open the Terms list.",
+      "Export every term NSBT has in Populi.",
+      "Write the earliest year and the latest year on the file name: YYYY-MM-DD-term-inventory.",
+      "This file rides with 71 and 72. Without it, leadership will send the packet back.",
+    ],
+    neverTicket: "Listing your own terms is not a vendor ticket.",
+  },
+  {
+    slug: "all-cohorts",
+    title: "Graduation and persistence — every entering class",
+    when: "Worksheet 71. Institutional Effectiveness. Strategic planning. DEAC.",
+    path: "Academics → Reporting → Data Slicer. Actions → Save Report. One saved report per start term on the inventory.",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "One workbook tab (or one file) per cohort.",
+    scope: "every-cohort",
+    steps: [
+      "Open the term inventory. Those start terms ARE the cohorts.",
+      "For each start term: saved report filter = that term. Columns: program, degree-completion status.",
+      "Save as NSBT Cohort + term. Do not stop after the year that was already open.",
+      "Reconcile graduates to 46 across four conferral dates (40 on the first three).",
+    ],
+    neverTicket: "A one-year persistence file is a failed CHECK, not a reason to email Support.",
+  },
+  {
+    slug: "all-years-enrollment",
+    title: "Enrollment now, 2024, AND 2025",
+    when: "Worksheet 72. Headcount worksheet. Board or Strategic.",
+    path: "saved report (active degree-seeking) + Academics → Reporting → Enrollments for each year.",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "Three views: as-of-today, 2024, 2025.",
+    scope: "named-years",
+    steps: [
+      "As-of today: saved report, active degree-seeking, columns program. Save NSBT Active Headcount.",
+      "Change the year/term picker off the current session. Export Enrollments for 2024.",
+      "Export Enrollments for 2025. Same columns.",
+      "Last reported anchor was 48 / 17 MAGL. A different clean as-of is allowed if dated. A single year is not.",
+    ],
+    neverTicket: "Populi will not pick the years for you. You name 2024 and 2025.",
+  },
+  {
+    slug: "all-conferrals",
+    title: "Every conferral date and graduate",
+    when: "To lock 71, 75, 77, 78. Any ‘how many graduates’ ask.",
+    path: "saved report or Academics conferral / degree-completion report. No term filter — or one pass per conferral date.",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "All conferral dates, program, name.",
+    scope: "all-history",
+    steps: [
+      "Clear the current-term filter.",
+      "Export every student with a conferral date.",
+      "Count distinct conferral dates. You should see four dates in the locked history (46 graduates; 40 on the first three).",
+      "June 2026 split (item 77) is a filter ON this file — it is not a substitute for the file.",
+    ],
+    neverTicket: "The graduate list is in Populi. Export it.",
+  },
+  {
+    slug: "session-roster",
+    title: "Who is enrolled this session",
+    when: "Dean, board, or the EVP asks ‘how many students are in session?’",
+    path: "Academics → the current term/session → Students → Export XLS/CSV",
+    roles: "Academic Auditor or Financial Auditor on the desk API key.",
+    exportAs: "XLS or CSV. Add columns on the export screen before you download.",
+    scope: "one-term",
+    steps: [
+      "Open the current NSBT session — not last year’s term with a similar name.",
+      "Use the Students report (everyone with an enrollment status in any offering).",
+      "Filter to Enrolled if they asked for headcount, or leave all statuses if they asked for drops too.",
+      "Export XLS/CSV. Add program, email, and student status columns if the screen offers them.",
+      "Save as YYYY-MM-DD-session-students.csv in the institutional records folder. Not a personal Drive.",
+    ],
+    neverTicket: "Populi Support does not build your headcount. If the export button is missing, you lack a role — fix roles locally.",
+  },
+  {
+    slug: "program-enrollment",
+    title: "Program enrollment statistics",
+    when: "Function F of the Office: institutional reporting to leadership.",
+    path: "Data Slicer: program + student status + catalog year",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "XLS/CSV. One tab per program if they asked for a pack.",
+    scope: "as-of",
+    steps: [
+      "Filter to active programs. Do not dump applicants into a headcount.",
+      "Add status, campus, and catalog year if the columns exist.",
+      "Save with the date. This is what you send the Dean of Institutional Effectiveness — not a vendor ticket.",
+    ],
+    neverTicket: "Populi will not interpret NSBT’s program list for you.",
+  },
+  {
+    slug: "course-load",
+    title: "Offerings and faculty load",
+    when: "Academic Dean wants the grid: what is running, who teaches, how many seats.",
+    path: "Academics → term → Courses → Export XLS/CSV",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "XLS/CSV, filter-sensitive.",
+    scope: "one-term",
+    steps: [
+      "Confirm you are on the session that is actually meeting.",
+      "Scan for offerings with no faculty listed — that is next week’s lockout waiting to happen.",
+      "Export. Add evaluation-completion or enrollment columns if useful.",
+      "Do not ask Populi to ‘send us the schedule.’ You just exported it.",
+    ],
+    neverTicket: "A missing instructor on an offering is local data entry, not a defect.",
+  },
+  {
+    slug: "balances",
+    title: "Who owes money — aging",
+    when: "You need the call list, or the Comptroller wants receivables at 30 / 60 / 90 / 120.",
+    path: "Billing → Aging (30, 60, 90, 120, over 120)",
+    roles: "Financial Auditor (desk API key).",
+    exportAs: "Spreadsheet from the aging / billing report or Data Slicer.",
+    scope: "as-of",
+    steps: [
+      "Start on the aging report before you invent a custom slicer.",
+      "If you need extra columns (program, advisor), open Data Slicer and add Financial fields: current balance, pending charges.",
+      "Export. Never paste the full file into a group chat.",
+      "A $0 student with a lock is a stuck lock — see the hold runbook. Still not a vendor ticket.",
+    ],
+    neverTicket: "‘Can you run our AR for us?’ is not a Populi Support request. This Office owns aging.",
+  },
+  {
+    slug: "payments",
+    title: "Payments and refunds this month",
+    when: "Reconcile the payment platform against the Populi ledger — function D.",
+    path: "Billing → Payments/Refunds (defaults to the last month). Term filter only includes terms flagged for billing.",
+    roles: "Financial Auditor (desk API key).",
+    exportAs: "Spreadsheet. Term filter only includes terms flagged for billing.",
+    scope: "named-date",
+    steps: [
+      "Set the date range to the month you are closing.",
+      "Export. Match refunds to withdrawal emails on the work log — a refund without a W is a story.",
+      "If a payment posted to the wrong person, look for a duplicate profile before you accuse the gateway.",
+      "Hand the Comptroller the same file you just exported. Do not retype it.",
+    ],
+    neverTicket: "A payment on the wrong student is almost always a duplicate person. Search, then merge with care.",
+  },
+  {
+    slug: "unfinalized",
+    title: "Offerings still unfinalized",
+    when: "Grade deadline has passed and transcripts are waiting.",
+    path: "Academics → term → Courses. Scan finalization status.",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "Notes on the work log + faculty email. Not a student-facing file.",
+    scope: "one-term",
+    steps: [
+      "List every offering that is not finalized.",
+      "Write faculty once. Copy the Academic Dean on the second notice.",
+      "Do not unfinalize casually. Do not ticket Populi because a grade is not on a transcript yet.",
+    ],
+    neverTicket: "Unfinalized ≠ broken. Faculty have not finished their job.",
+  },
+  {
+    slug: "not-registered",
+    title: "Active students not in the next session",
+    when: "Continuous enrollment check before the add window closes.",
+    path: "Data Slicer: active student status minus those on the next session’s Students report",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "Two CSVs, then a simple match in a sheet — or a slicer if you have the columns.",
+    scope: "as-of",
+    steps: [
+      "Export current active students (program + status).",
+      "Export next session Students report.",
+      "Who is active, not on leave, and missing from the session list? That is your call list.",
+      "Some are graduating. Some disappeared. LOA vs silent stop-out is policy — ask the Academic Dean, not Populi.",
+    ],
+    neverTicket: "Populi will not interpret NSBT’s continuous-enrollment rule for you.",
+  },
+  {
+    slug: "transcript-queue",
+    title: "Open transcript requests",
+    when: "Daily control: what official copies are waiting.",
+    path: "Transcript Requests report · print queue",
+    roles: "Academic Auditor (desk API key).",
+    exportAs: "The queue itself. Log fulfillments on the work log.",
+    scope: "as-of",
+    steps: [
+      "Open Transcript Requests. Identity, lock, finalization, destination — then fulfill.",
+      "If the public form is not on yet, requests still arrive at studentservices@nsbt.org. Same checks.",
+      "Do not ask Populi to mail the transcript for you.",
+    ],
+    neverTicket: "A request in the queue is your work item. Configuration of the public form is one line on Automate.",
+  },
+  {
+    slug: "automations-fired",
+    title: "What automations fired",
+    when: "Friday control panel, or someone says ‘the letter never came.’",
+    path: "Account left column → Automations · plus Account → Reporting → Automations report",
+    roles: "Not required for the desk key. Role map is a people export.",
+    exportAs: "The in-product report. Screenshot the name and count if you must escalate a dead automation.",
+    scope: "named-date",
+    steps: [
+      "Open the Automations report for the period.",
+      "Open Scheduled Events for everything still queued.",
+      "If a plan never existed, that is a configuration packet — Automate — not a defect ticket.",
+      "If a named automation that Populi already installed has stopped for everyone, that is the rare vendor ticket.",
+    ],
+    neverTicket: "‘Please turn on registration letters’ is the Automate packet. Not a new ticket every session.",
+  },
+  {
+    slug: "data-slicer",
+    title: "How to use the Data Slicer",
+    when: "A standing report is almost right and you need two more columns — or you need to apply a communication plan in bulk.",
+    path: "Academics → Reporting → Data Slicer",
+    roles: "Whatever you can see depends on your roles. The desk key is Academic Auditor + Financial Auditor.",
+    exportAs: "XLS/CSV, or an aggregate PDF of the graph. You can also act on the result set.",
+    scope: "n-a",
+    steps: [
+      "Read the card’s year-scope first. If it says ALL YEARS, clear the term filter. If it says this session, keep it.",
+      "Add only the columns you will use. The slicer will not give assignment-level grades.",
+      "Financial fields: balance, pending charges, expected aid — if your role shows them.",
+      "Apply a communication plan to the result set when the letter belongs to that group.",
+      "If a column is missing, you probably lack the role — not a platform outage.",
+    ],
+    neverTicket: "‘Please build this report for us’ is campus work. Read the slicer article, then try once.",
+  },
+];
+
+export function reportBySlug(slug: string) {
+  return reports.find((r) => r.slug === slug);
+}

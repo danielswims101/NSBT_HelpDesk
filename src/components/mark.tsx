@@ -1,0 +1,23 @@
+import { cn } from "@/lib/utils";
+
+export function NsbtMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      className={cn("text-primary", className)}
+      aria-hidden="true"
+    >
+      <rect width="40" height="40" rx="8" fill="currentColor" />
+      <path
+        d="M10 28V12.5c0-.6.4-1 1-1h7.2c.3 0 .6.1.8.4l.8 1.1h8.2c.6 0 1 .4 1 1V28c0 .6-.4 1-1 1H11c-.6 0-1-.4-1-1Z"
+        fill="#f4efe6"
+      />
+      <path
+        d="M13 17.5h14M13 21h10M13 24.5h8"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
