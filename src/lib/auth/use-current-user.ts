@@ -19,8 +19,8 @@ export type AppUser = {
  */
 export const DEV_USER: AppUser = {
   id: "dev-user",
-  displayName: "Randy Whittaker",
-  primaryEmail: "it@nsbt.org",
+  displayName: "Dev User",
+  primaryEmail: "dev@example.com",
   profileImageUrl: null,
   isDevFallback: true,
 };
