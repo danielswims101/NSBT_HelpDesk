@@ -16,13 +16,11 @@ A signed-in staff desk that **reads** Populi with one API key (Academic Auditor 
 
 Everyone who is allowed in gets the **same Home**. Press a button. Numbers land on the page. Staff work here. **No email packets. No worksheet page.**
 
-Menu: **Home · Ask the desk · Meet · Who can sign in**
+Menu: **Home · Ask the desk · Who can sign in**
 
 Pulls on Home: every term, degrees granted, enrollment by year, students, home addresses, catalog courses, course offerings, invoices, roles, transcript requests, test the link.
 
 Ask the desk runs those same pulls if someone types the request.
-
-**Meet** is a video-call page. It opens Google Meet in a new tab (everyone signs in with their @nsbt.org Google account, so there is nothing new to install): start an instant call, open the shared "desk room," join a link someone sent, or send a Calendar invite to another administrator. Google Meet does its own video — this desk only opens it.
 
 This desk is **private**. It carries a `noindex` tag and a `robots.txt` that blocks all crawlers, so it never shows up in Google beside the public site. That is on purpose — leave it in place.
 

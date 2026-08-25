@@ -5,7 +5,6 @@ import {
   Menu,
   MessageCircle,
   Users,
-  Video,
 } from "lucide-react";
 import { RedirectToSignIn } from "@/lib/auth/gates";
 import { signOut } from "@/lib/auth/client";
@@ -20,7 +19,6 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { to: "/", label: "Home", icon: LayoutDashboard },
   { to: "/ask", label: "Ask the desk", icon: MessageCircle },
-  { to: "/meet", label: "Meet", icon: Video },
   { to: "/staff", label: "Who can sign in", icon: Users },
 ] as const;
 
