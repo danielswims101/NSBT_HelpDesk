@@ -128,7 +128,15 @@ function authPopupPlugin(): Plugin {
 // opens a second dev-server port, which breaks the single-port preview.
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
+// The static GitHub Pages demo sets PAGES_BASE=/NSBT_HelpDesk/. Local dev and the
+// Vercel deploy stay at "/". When PAGES_BASE is set we build a static SPA (no
+// server, no Grok chrome) so the desk's look can be viewed at the Pages URL — a
+// look-only demo (no live Populi, no working sign-in; the Home stays behind auth).
+const pagesBase = process.env.PAGES_BASE || "/";
+const staticDemo = Boolean(process.env.PAGES_BASE);
+
 export default defineConfig(({ command }) => ({
+  base: pagesBase,
   server: {
     host: "0.0.0.0",
     port: 8080,
@@ -139,11 +147,13 @@ export default defineConfig(({ command }) => ({
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
     authPopupPlugin(),
-    // PWA head + ?install=1 tutorial page; runs before Start/Nitro.
-    grokPwaPlugin(),
+    // Grok PWA chrome — skipped for the static Pages demo build.
+    ...(staticDemo ? [] : [grokPwaPlugin()]),
     tailwindcss(),
-    tanstackStart(),
-    ...(command === "build"
+    tanstackStart(
+      staticDemo ? { spa: { enabled: true, prerender: { crawlLinks: true } } } : undefined,
+    ),
+    ...(command === "build" && !staticDemo
       ? [
           nitro({
             preset: "vercel",

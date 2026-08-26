@@ -1,0 +1,59 @@
+name: Deploy desk demo to GitHub Pages
+
+# Builds a LOOK-ONLY static demo of the desk (the sign-in front door) and
+# publishes it to GitHub Pages. No server, no Populi, no working sign-in — the
+# real desk stays behind Google auth and deploys to desk.nsbt.org via Vercel.
+#
+# One-time: repo → Settings → Pages → Build and deployment → Source = "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PAGES_BASE: /NSBT_HelpDesk/
+      # DATABASE_URL intentionally unset so db:migrate skips.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - name: Build static demo
+        run: npm run build
+      - name: Locate output + SPA layout
+        run: |
+          DIR=dist/client
+          [ -f "$DIR/_shell.html" ] || { echo "::error::no _shell.html"; ls -R dist | head; exit 1; }
+          cp "$DIR/_shell.html" "$DIR/index.html"
+          cp "$DIR/_shell.html" "$DIR/404.html"
+          touch "$DIR/.nojekyll"
+          ls -la "$DIR"/*.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/client
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

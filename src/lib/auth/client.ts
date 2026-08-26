@@ -207,5 +207,8 @@ export async function signOut(redirectTo = "/"): Promise<void> {
   } finally {
     setBearerToken(null);
   }
-  window.location.href = redirectTo;
+  // Respect the app base (e.g. "/NSBT_HelpDesk/" on the static Pages demo) for
+  // absolute in-app paths, so the redirect stays inside the deployed app.
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  window.location.href = redirectTo.startsWith("/") ? base + redirectTo : redirectTo;
 }
